@@ -1,12 +1,14 @@
 package com.raquel.blocodenotas.data
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 
-class UserViewModel(application: Application) {
+class UserViewModel(application: Application): AndroidViewModel(application) {
     private val readAllData: LiveData<List<User>>
     private val repository: UserRepository
 
@@ -16,7 +18,10 @@ class UserViewModel(application: Application) {
         readAllData = repository.readAllData
     }
 
-   // suspend fun addUser(user: User){
-   //viewModelScope.launch(Dispatchers.IO){
-    //    repository.addUser(user) }}
+    fun addUser(user: User){
+    viewModelScope.launch(Dispatchers.IO){
+        repository.addUser(user)
+    }
+
+    }
 }
