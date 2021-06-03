@@ -9,7 +9,7 @@ data class User (
     val id: Int,
     val notesTitle: String,
     val notesSubtitle: String,
-    val notesDate: String,
-    val notes: String,
-    val notesPriority: String,
+    val notesData: String,
+    val notesPriority: String
+
 )
