@@ -21,7 +21,7 @@ class NotesFragment: Fragment() {
     private val binding get() = _binding!!
 
     private var priority = ""
-    private val date: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+    val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -29,12 +29,7 @@ class NotesFragment: Fragment() {
         val view = binding.root
 
         fun InitView() {
-
             binding.apply {
-                doneButton.setOnClickListener {
-                insertDataToDatabase()
-                }
-
                 greenButton.setOnClickListener{
                     greenButton.setImageResource(R.drawable.ic_baseline_done_24)
                     yellowButton.setImageResource(0)
@@ -47,7 +42,6 @@ class NotesFragment: Fragment() {
                     greenButton.setImageResource(0)
                     redButton.setImageResource(0)
                     priority = "2"
-
                 }
 
                 redButton.setOnClickListener{
@@ -55,6 +49,9 @@ class NotesFragment: Fragment() {
                     greenButton.setImageResource(0)
                     yellowButton.setImageResource(0)
                     priority = "3"
+                }
+                doneButton.setOnClickListener {
+                    insertDataToDatabase()
                 }
             }
             //RECUPERAR A VIEWMODEL QUE EU CRIEI AQUI NO FRAGMENTO.
@@ -73,7 +70,7 @@ class NotesFragment: Fragment() {
 
             if(inputCheck(title, subtitle, notes, priority)){
                 //SE FOR TRUE, CRIAR OBJETO DA CLASSE USER NO BANCO DE DADOS
-                val userObj = User(0, title, subtitle, date, priority)
+                val userObj = User(0, title, subtitle, notes, currentDate, priority)
                 //ADICIONAR AO BANCO DE DADOS
                 mUserViewModel.addUser(userObj)
                 DynamicToast.make(this@NotesFragment.requireActivity(), "Nota adicionada com sucesso")

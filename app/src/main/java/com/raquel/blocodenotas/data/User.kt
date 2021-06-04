@@ -5,11 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "user_table")
 data class User (
-    @PrimaryKey(autoGenerate = true)
+        @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val notesTitle: String,
-    val notesSubtitle: String,
-    val notesData: String,
-    val notesPriority: String
+        val notesTitleDB: String,
+        val notesSubtitleDB: String,
+        val notesContent: String,
+        val notesDate: String,
+        val notesPriorityDB: String
 
 )
