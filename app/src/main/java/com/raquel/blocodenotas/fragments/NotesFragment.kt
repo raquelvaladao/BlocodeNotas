@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.raquel.blocodenotas.R
+import com.raquel.blocodenotas.data.Priority
 import com.raquel.blocodenotas.data.User
 import com.raquel.blocodenotas.data.UserViewModel
 import com.raquel.blocodenotas.databinding.FragmentNotesBinding
@@ -21,7 +22,7 @@ class NotesFragment: Fragment() {
     private val binding get() = _binding!!
 
     private var priority = ""
-    val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+    private val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -30,21 +31,21 @@ class NotesFragment: Fragment() {
 
         fun InitView() {
             binding.apply {
-                greenButton.setOnClickListener{
+                greenButton.setOnClickListener {
                     greenButton.setImageResource(R.drawable.ic_baseline_done_24)
                     yellowButton.setImageResource(0)
                     redButton.setImageResource(0)
                     priority = "1"
                 }
 
-                yellowButton.setOnClickListener{
+                yellowButton.setOnClickListener {
                     yellowButton.setImageResource(R.drawable.ic_baseline_done_24)
                     greenButton.setImageResource(0)
                     redButton.setImageResource(0)
                     priority = "2"
                 }
 
-                redButton.setOnClickListener{
+                redButton.setOnClickListener {
                     redButton.setImageResource(R.drawable.ic_baseline_done_24)
                     greenButton.setImageResource(0)
                     yellowButton.setImageResource(0)
@@ -68,20 +69,19 @@ class NotesFragment: Fragment() {
             val subtitle = subtitleEditText.text.toString()
             val notes = notesEditText.text.toString()
 
-            if(inputCheck(title, subtitle, notes, priority)){
+            if (inputCheck(title, subtitle, notes, priority)) {
                 //SE FOR TRUE, CRIAR OBJETO DA CLASSE USER NO BANCO DE DADOS
-                val userObj = User(0, title, subtitle, notes, currentDate, priority)
+                val userObj = User(0, title, subtitle, notes, currentDate, convertPriority(priority))
                 //ADICIONAR AO BANCO DE DADOS
                 mUserViewModel.addUser(userObj)
                 DynamicToast.make(this@NotesFragment.requireActivity(), "Nota adicionada com sucesso")
-                    .show()
+                        .show()
                 findNavController().navigate(R.id.action_notesFragment_to_listFragment3)
             } else
                 DynamicToast.make(this@NotesFragment.requireActivity(), "Preencha todos os campos")
-                .show()
+                        .show()
         }
     }
-
     //VER SE TODOS OS INPUT TÃO PREENCHIDOS
     private fun inputCheck (
         titleParam: String,
@@ -91,4 +91,18 @@ class NotesFragment: Fragment() {
         return!(titleParam.isEmpty() && subtitleParam.isEmpty() && notesParam.isEmpty() && priorityParam.isEmpty())
     }
 
+    private fun convertPriority(priorityFactor: String): Priority{
+        return when(priorityFactor) {
+            "3" -> {
+                Priority.HIGH
+            }
+            "2" -> {
+                Priority.MEDIUM
+            }
+            "1" -> {
+                Priority.LOW
+            }
+            else -> return Priority.LOW
+        }
+    }
 }

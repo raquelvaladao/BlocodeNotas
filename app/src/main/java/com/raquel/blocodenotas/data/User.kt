@@ -1,5 +1,6 @@
 package com.raquel.blocodenotas.data
 
+import android.renderscript.RenderScript
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,10 +8,10 @@ import androidx.room.PrimaryKey
 data class User (
         @PrimaryKey(autoGenerate = true)
     val id: Int,
-        val notesTitleDB: String,
-        val notesSubtitleDB: String,
-        val notesContent: String,
-        val notesDate: String,
-        val notesPriorityDB: String
+        var notesTitleDB: String,
+        var notesSubtitleDB: String,
+        var notesContent: String,
+        var notesDate: String,
+        var notesPriorityDB: Priority
 
 )
