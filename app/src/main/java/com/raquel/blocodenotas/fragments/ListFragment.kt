@@ -1,14 +1,13 @@
 package com.raquel.blocodenotas.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.UserViewModel
@@ -31,7 +30,7 @@ class ListFragment : Fragment() {
         val adapter = ListAdapter()
         val recyclerView = binding.notesRecyclerView
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
 
         //USERVIEWMODEL
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
@@ -41,7 +40,16 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment3_to_notesFragment)
         }
 
+        binding.listLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment3_to_updateFragment)
+        }
+
+        setHasOptionsMenu(true)
+
         return view
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.list_fragment_menu, menu)
+    }
 }

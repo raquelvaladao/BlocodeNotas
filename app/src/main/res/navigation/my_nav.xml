@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_listFragment3_to_notesFragment"
             app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_listFragment3_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/notesFragment"
@@ -20,6 +23,15 @@
         tools:layout="@layout/fragment_notes" >
         <action
             android:id="@+id/action_notesFragment_to_listFragment3"
+            app:destination="@id/listFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.raquel.blocodenotas.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_listFragment3"
             app:destination="@id/listFragment3" />
     </fragment>
 </navigation>
