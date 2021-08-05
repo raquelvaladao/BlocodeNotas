@@ -11,7 +11,7 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.Priority
 import com.raquel.blocodenotas.data.User
-import com.raquel.blocodenotas.data.UserViewModel
+import com.raquel.blocodenotas.viewmodel.UserViewModel
 import com.raquel.blocodenotas.databinding.FragmentNotesBinding
 import java.text.SimpleDateFormat
 import java.util.*

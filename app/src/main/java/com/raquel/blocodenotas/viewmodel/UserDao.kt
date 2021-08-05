@@ -1,10 +1,11 @@
-package com.raquel.blocodenotas.data
+package com.raquel.blocodenotas.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.raquel.blocodenotas.data.User
 
 @Dao
 interface UserDao {

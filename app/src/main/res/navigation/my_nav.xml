@@ -27,11 +27,14 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.raquel.blocodenotas.UpdateFragment"
+        android:name="com.raquel.blocodenotas.fragments.UpdateFragment"
         android:label="fragment_update"
         tools:layout="@layout/fragment_update" >
         <action
             android:id="@+id/action_updateFragment_to_listFragment3"
             app:destination="@id/listFragment3" />
+        <argument
+            android:name="currentItem"
+            app:argType="com.raquel.blocodenotas.data.User" />
     </fragment>
 </navigation>

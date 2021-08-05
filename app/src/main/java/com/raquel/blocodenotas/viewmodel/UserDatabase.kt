@@ -1,10 +1,11 @@
-package com.raquel.blocodenotas.data
+package com.raquel.blocodenotas.viewmodel
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.raquel.blocodenotas.data.User
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
@@ -16,7 +17,7 @@ abstract class UserDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: UserDatabase? = null
 
-        fun getDatabase(context: Context): UserDatabase{
+        fun getDatabase(context: Context): UserDatabase {
             val tempInstance = INSTANCE
             if(tempInstance != null){
                 return tempInstance

@@ -15,13 +15,13 @@
             <menu>
                 <item
                     android:id="@+id/menu_priority_high"
-                    android:title="Prioridade alta"/>
+                    android:title="prioridade_alta"/>
                 <item
                     android:id="@+id/menu_priority_medium"
-                    android:title="Prioridade média"/>
+                    android:title="Prioridade_média"/>
                 <item
                     android:id="@+id/menu_priority_low"
-                    android:title="Prioridade baixa"/>
+                    android:title="Prioridade_baixa"/>
             </menu>
     </group>
 

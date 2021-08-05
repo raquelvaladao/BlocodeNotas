@@ -1,10 +1,12 @@
 package com.raquel.blocodenotas.data
 
-import android.renderscript.RenderScript
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "user_table")
+@Parcelize
 data class User (
         @PrimaryKey(autoGenerate = true)
     val id: Int,
@@ -14,4 +16,4 @@ data class User (
         var notesDate: String,
         var notesPriorityDB: Priority
 
-)
+): Parcelable

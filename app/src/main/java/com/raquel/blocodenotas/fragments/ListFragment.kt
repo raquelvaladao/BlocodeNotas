@@ -3,14 +3,12 @@ package com.raquel.blocodenotas.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.raquel.blocodenotas.R
-import com.raquel.blocodenotas.data.UserViewModel
+import com.raquel.blocodenotas.viewmodel.UserViewModel
 import com.raquel.blocodenotas.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
@@ -44,6 +42,7 @@ class ListFragment : Fragment() {
             findNavController().navigate(R.id.action_listFragment3_to_updateFragment)
         }
 
+        //menu personalizado.
         setHasOptionsMenu(true)
 
         return view

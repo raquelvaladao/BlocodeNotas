@@ -1,10 +1,12 @@
-package com.raquel.blocodenotas.data
+package com.raquel.blocodenotas.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.viewModelScope
+import com.raquel.blocodenotas.data.User
+import com.raquel.blocodenotas.data.UserRepository
 import kotlinx.coroutines.launch
 
 
