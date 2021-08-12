@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User (
         @PrimaryKey(autoGenerate = true)
-    val id: Int,
+        val id: Int,
         var notesTitleDB: String,
         var notesSubtitleDB: String,
         var notesContent: String,

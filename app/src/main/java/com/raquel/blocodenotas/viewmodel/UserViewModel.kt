@@ -20,10 +20,22 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         readAllData = repository.readAllData
     }
 
-    fun addUser(user: User){
-    viewModelScope.launch(Dispatchers.IO){
-        repository.addUser(user)
+    fun addUser(user: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addUser(user)
+        }
     }
 
+    fun updateUser(user: User){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.updateUser(user)
+        }
     }
+
+    //fun deleteUser(user: User){
+     //   viewModelScope.launch(Dispatchers.IO){
+      //      repository.deleteUser(user)
+       // }
+    //}
+
 }

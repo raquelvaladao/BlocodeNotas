@@ -33,8 +33,8 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             findViewById<TextView>(R.id.notesSubtitleItem).text = currentItem.notesSubtitleDB
             findViewById<TextView>(R.id.notesDateItem).text = currentItem.notesDate
             findViewById<CardView>(R.id.cardview).setOnClickListener {
-                val action = ListFragmentDirections.actionListFragment3ToUpdateFragment(userList[position])
-                holder.itemView.findNavController().navigate(R.id.action_listFragment3_to_updateFragment)
+                val actionToPassDataToUpdateFragment = ListFragmentDirections.actionListFragment3ToUpdateFragment(userList[position])
+                holder.itemView.findNavController().navigate(actionToPassDataToUpdateFragment)
             }
 
             when (currentItem.notesPriorityDB) {
