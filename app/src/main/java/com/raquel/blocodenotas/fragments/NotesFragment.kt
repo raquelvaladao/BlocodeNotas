@@ -5,13 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.Priority
 import com.raquel.blocodenotas.data.User
-import com.raquel.blocodenotas.data.UserViewModel
+import com.raquel.blocodenotas.viewmodel.UserViewModel
 import com.raquel.blocodenotas.databinding.FragmentNotesBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,33 +24,31 @@ class NotesFragment: Fragment() {
     private val binding get() = _binding!!
 
     private var priority = ""
-    private val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+    private val currentDate: String =
+        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+    //private val sharedFunctionsViewModel: SharedFunctionsViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNotesBinding.inflate(inflater, container,false)
+        _binding = FragmentNotesBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        fun InitView() {
+        fun initView() {
             binding.apply {
                 greenButton.setOnClickListener {
-                    greenButton.setImageResource(R.drawable.ic_baseline_done_24)
-                    yellowButton.setImageResource(0)
-                    redButton.setImageResource(0)
+                    setGivenColorToPriorityImageView(greenButton, yellowButton, redButton)
                     priority = "1"
                 }
 
                 yellowButton.setOnClickListener {
-                    yellowButton.setImageResource(R.drawable.ic_baseline_done_24)
-                    greenButton.setImageResource(0)
-                    redButton.setImageResource(0)
+                    setGivenColorToPriorityImageView(yellowButton, greenButton, redButton)
                     priority = "2"
                 }
 
                 redButton.setOnClickListener {
-                    redButton.setImageResource(R.drawable.ic_baseline_done_24)
-                    greenButton.setImageResource(0)
-                    yellowButton.setImageResource(0)
+                    setGivenColorToPriorityImageView(redButton, greenButton, yellowButton)
                     priority = "3"
                 }
                 doneButton.setOnClickListener {
@@ -58,51 +58,72 @@ class NotesFragment: Fragment() {
             //RECUPERAR A VIEWMODEL QUE EU CRIEI AQUI NO FRAGMENTO.
             mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         }
-        InitView()
+        initView()
         return view
     }
 
     //ADICIONAR O INPUT DA VIEW AO MEU BANCO DE DADOS
-    private fun insertDataToDatabase(){
+    private fun insertDataToDatabase() {
         binding.apply {
             val title = titleEditText.text.toString()
             val subtitle = subtitleEditText.text.toString()
             val notes = notesEditText.text.toString()
 
-            if (inputCheck(title, subtitle, notes, priority)) {
+            if (inputCheck(title, notes)) {
                 //SE FOR TRUE, CRIAR OBJETO DA CLASSE USER NO BANCO DE DADOS
-                val userObj = User(0, title, subtitle, notes, currentDate, convertPriority(priority))
+                val userObj = User(
+                    0,
+                    title,
+                    subtitle,
+                    notes,
+                    currentDate,
+                        convertPriorityViewToModel(priority)
+                )
                 //ADICIONAR AO BANCO DE DADOS
                 mUserViewModel.addUser(userObj)
-                DynamicToast.make(this@NotesFragment.requireActivity(), "Nota adicionada com sucesso")
-                        .show()
+                DynamicToast.make(
+                    this@NotesFragment.requireActivity(),
+                    "Nota adicionada com sucesso"
+                )
+                    .show()
                 findNavController().navigate(R.id.action_notesFragment_to_listFragment3)
             } else
                 DynamicToast.make(this@NotesFragment.requireActivity(), "Preencha todos os campos")
-                        .show()
+                    .show()
         }
-    }
-    //VER SE TODOS OS INPUT TÃO PREENCHIDOS
-    private fun inputCheck (
-        titleParam: String,
-        subtitleParam: String,
-        notesParam: String,
-        priorityParam: String): Boolean {
-        return!(titleParam.isEmpty() && subtitleParam.isEmpty() && notesParam.isEmpty() && priorityParam.isEmpty())
     }
 
-    private fun convertPriority(priorityFactor: String): Priority{
-        return when(priorityFactor) {
-            "3" -> {
-                Priority.HIGH
+    companion object {
+        fun inputCheck(
+                titleParam: String,
+                notesParam: String
+        ): Boolean {
+            return !(titleParam.isEmpty() &&  notesParam.isEmpty())
+        }
+
+        fun convertPriorityViewToModel(priorityFactor: String): Priority {
+            return when(priorityFactor) {
+                "3" -> {
+                    Priority.HIGH
+                }
+                "2" -> {
+                    Priority.MEDIUM
+                }
+                "1" -> {
+                    Priority.LOW
+                }
+                else -> return Priority.LOW
             }
-            "2" -> {
-                Priority.MEDIUM
-            }
-            "1" -> {
-                Priority.LOW
-            }
-            else -> return Priority.LOW
+        }
+
+        fun setGivenColorToPriorityImageView(priorityButton: ImageView,
+                                             otherPriorityButton1: ImageView,
+                                             otherPriorityButton2: ImageView
+        ){
+            priorityButton.setImageResource(R.drawable.ic_baseline_done_24)
+            otherPriorityButton1.setImageResource(0)
+            otherPriorityButton2.setImageResource(0)
         }
     }
+
 }

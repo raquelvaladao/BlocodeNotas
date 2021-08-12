@@ -1,9 +1,13 @@
 package com.raquel.blocodenotas.fragments
 
+import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.Priority
@@ -28,11 +32,18 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             findViewById<TextView>(R.id.notesTitleItem).text = currentItem.notesTitleDB
             findViewById<TextView>(R.id.notesSubtitleItem).text = currentItem.notesSubtitleDB
             findViewById<TextView>(R.id.notesDateItem).text = currentItem.notesDate
+            findViewById<CardView>(R.id.cardview).setOnClickListener {
+                val actionToPassDataToUpdateFragment = ListFragmentDirections.actionListFragment3ToUpdateFragment(userList[position])
+                holder.itemView.findNavController().navigate(actionToPassDataToUpdateFragment)
+            }
 
             when (currentItem.notesPriorityDB) {
-                Priority.HIGH -> holder.itemView.findViewById<View>(R.id.notesPriorityItem).setBackgroundResource(R.drawable.red_shape)
-                Priority.MEDIUM -> holder.itemView.findViewById<View>(R.id.notesPriorityItem).setBackgroundResource(R.drawable.yellow_shape)
-                Priority.LOW -> holder.itemView.findViewById<View>(R.id.notesPriorityItem).setBackgroundResource(R.drawable.green_shape)
+                Priority.HIGH -> holder.itemView.findViewById<View>(R.id.notesPriorityItem)
+                    .setBackgroundResource(R.drawable.red_shape)
+                Priority.MEDIUM -> holder.itemView.findViewById<View>(R.id.notesPriorityItem)
+                    .setBackgroundResource(R.drawable.yellow_shape)
+                Priority.LOW -> holder.itemView.findViewById<View>(R.id.notesPriorityItem)
+                    .setBackgroundResource(R.drawable.green_shape)
             }
         }
     }

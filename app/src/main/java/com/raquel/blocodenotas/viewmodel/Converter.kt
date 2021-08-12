@@ -1,6 +1,7 @@
-package com.raquel.blocodenotas.data
+package com.raquel.blocodenotas.viewmodel
 
 import androidx.room.TypeConverter
+import com.raquel.blocodenotas.data.Priority
 
 
 class Converter {
@@ -9,7 +10,7 @@ class Converter {
         return priority.name
     }
     @TypeConverter
-    fun fromStringToPriorityObject(priority: String): Priority{
+    fun fromStringToPriorityObject(priority: String): Priority {
         return Priority.valueOf(priority)
     }
 }
