@@ -26,7 +26,8 @@
                 android:background="@drawable/edit_text_back"
                 android:fontFamily="@font/product_sans_regular"
                 android:hint="Título"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:singleLine="true"/>
 
             <EditText
                 android:id="@+id/subtitleEditText"
@@ -40,7 +41,8 @@
                 android:background="@drawable/edit_text_back"
                 android:fontFamily="@font/product_sans_regular"
                 android:hint="Subtítulo"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:singleLine="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,7 +97,8 @@
                 android:background="@drawable/edit_text_back"
                 android:fontFamily="@font/product_sans_regular"
                 android:hint="Nota"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:gravity="start"/>
 
         </LinearLayout>
 

@@ -2,12 +2,13 @@ package com.raquel.blocodenotas.fragments
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.raquel.blocodenotas.R
+import com.raquel.blocodenotas.adapter.ListAdapter
 import com.raquel.blocodenotas.viewmodel.UserViewModel
 import com.raquel.blocodenotas.databinding.FragmentListBinding
 
@@ -30,9 +31,10 @@ class ListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
 
-        //USERVIEWMODEL
+
+        //USERVIEWMODEL observa mudanças e notifica pro recyclerview
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user -> adapter.setData(user) })
+        mUserViewModel.readAllData.observe(viewLifecycleOwner, { user -> adapter.setData(user) })
 
         binding.newNotesButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment3_to_notesFragment)
