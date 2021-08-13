@@ -15,8 +15,6 @@
     implementation 'cn.pedant.sweetalert:library:1.3'<br><br>
     //Coroutines, Room, Navigation
 
-    <h3>Study form:</h3>
-    Google Codelabs, Stevdza-San (Youtube) - patterns and logic<br>
+    Study form:
+    Google Codelabs, Stevdza-San (Youtube) - patterns and logic
     YourDeveloperHere (Youtube) - UI only (half of it)
-
-![Sem título](https://user-images.githubusercontent.com/58961790/120752987-e940f980-c4e0-11eb-8fc2-0e2ba4c0dd0d.png)
