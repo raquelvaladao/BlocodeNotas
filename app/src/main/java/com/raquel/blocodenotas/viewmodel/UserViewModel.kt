@@ -12,12 +12,17 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<User>>
+    val sortByHigh: LiveData<List<User>>
+    val sortByLow: LiveData<List<User>>
     private val repository: UserRepository
+    val userDao = UserDatabase.getDatabase(application).userDao()
 
     init {
-        val userDao = UserDatabase.getDatabase(application).userDao()
+
         repository = UserRepository(userDao)
         readAllData = repository.readAllData
+        sortByHigh = repository.sortByHigh
+        sortByLow = repository.sortByLow
     }
 
     fun addUser(user: User) {
@@ -38,4 +43,16 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
       }
     }
 
+    fun deleteAll(){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.deleteAll()
+        }
+    }
+
+    fun sortByHigh(): LiveData<List<User>> {
+        return repository.sortByHigh()
+    }
+    fun sortByLow(): LiveData<List<User>> {
+        return repository.sortByLow()
+    }
 }

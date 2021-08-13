@@ -82,14 +82,12 @@ class UpdateFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Sim"){
             _,_->
-            mUserViewModel.deleteUser(args.currentItem)
+            args.currentItem?.let { mUserViewModel.deleteUser(it) }
             DynamicToast.make(this@UpdateFragment.requireActivity(), "Nota deletada")
                     .show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment3)
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment3)
-
         }
-        builder.setTitle("Tem certeza que deseja apagar ${args.currentItem.notesTitleDB}?")
+        builder.setTitle("Tem certeza que deseja apagar '${args.currentItem?.notesTitleDB}'?")
         builder.setMessage("Não será possível recuperar o arquivo")
         builder.setNegativeButton("Não") { _, _ -> }
         builder.create().show()
@@ -137,11 +135,11 @@ class UpdateFragment : Fragment() {
 
     private fun bringDataArgsToUpdateView() {
         binding.apply {
-            titleEditText.setText(args.currentItem.notesTitleDB)
-            updateSubtitleEditText.setText(args.currentItem.notesSubtitleDB)
-            updateNotesEditText.setText(args.currentItem.notesContent)
+            titleEditText.setText(args.currentItem?.notesTitleDB)
+            updateSubtitleEditText.setText(args.currentItem?.notesSubtitleDB)
+            updateNotesEditText.setText(args.currentItem?.notesContent)
         }
-        when (args.currentItem.notesPriorityDB) {
+        when (args.currentItem?.notesPriorityDB) {
             LOW -> parsePriorityModelToView(LOW)
             MEDIUM -> parsePriorityModelToView(MEDIUM)
             HIGH -> parsePriorityModelToView(HIGH)
@@ -156,17 +154,21 @@ class UpdateFragment : Fragment() {
 
             if (NotesFragment.inputCheck(title, notes)) {
                 //SE FOR TRUE, CRIAR OBJETO DA CLASSE USER NO BANCO DE DADOS
-                val updatedItem = User(
-                        args.currentItem.id,
-                        title,
-                        subtitle,
-                        notes,
-                        currentDate,
-                        NotesFragment.convertPriorityViewToModel(priority)
-                )
+                val updatedItem = args.currentItem?.let {
+                    User(
+                            it.id,
+                            title,
+                            subtitle,
+                            notes,
+                            currentDate,
+                            NotesFragment.convertPriorityViewToModel(priority)
+                    )
+                }
                 //ADICIONAR AO BANCO DE DADOS
                 //MVIEWMODEL
-                mUserViewModel.updateUser(updatedItem)
+                if (updatedItem != null) {
+                    mUserViewModel.updateUser(updatedItem)
+                }
                 DynamicToast.make(this@UpdateFragment.requireActivity(), "Nota salva com sucesso")
                     .show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment3)

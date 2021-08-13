@@ -26,7 +26,6 @@ class NotesFragment: Fragment() {
     private var priority = ""
     private val currentDate: String =
         SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-    //private val sharedFunctionsViewModel: SharedFunctionsViewModel by viewModels()
 
 
     override fun onCreateView(
