@@ -18,3 +18,4 @@
     Study form:
     Google Codelabs, Stevdza-San (Youtube) - patterns and logic
     YourDeveloperHere (Youtube) - UI only (half of it)
+![inCollage_20210812_231236445](https://user-images.githubusercontent.com/58961790/129297675-b1ee0947-02fe-4dc4-a0b0-55755b71e870.jpg)
