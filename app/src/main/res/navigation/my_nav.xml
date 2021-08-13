@@ -23,7 +23,9 @@
         tools:layout="@layout/fragment_notes" >
         <action
             android:id="@+id/action_notesFragment_to_listFragment3"
-            app:destination="@id/listFragment3" />
+            app:destination="@id/listFragment3"
+            app:popUpTo="@id/listFragment3"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
@@ -32,9 +34,13 @@
         tools:layout="@layout/fragment_update">
         <action
             android:id="@+id/action_updateFragment_to_listFragment3"
-            app:destination="@id/listFragment3" />
+            app:destination="@id/listFragment3"
+            app:popUpTo="@id/listFragment3"
+            app:popUpToInclusive="true" />
         <argument
             android:name="currentItem"
-            app:argType="com.raquel.blocodenotas.data.User" />
+            app:argType="com.raquel.blocodenotas.data.User"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
 </navigation>

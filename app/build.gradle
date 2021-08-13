@@ -86,6 +86,9 @@ dependencies {
     //Custom Toast
     implementation 'com.pranavpandey.android:dynamic-toasts:3.3.1'
 
+    //Custom Alert Dialog
+    implementation 'cn.pedant.sweetalert:library:1.3'
+
 
 
 }

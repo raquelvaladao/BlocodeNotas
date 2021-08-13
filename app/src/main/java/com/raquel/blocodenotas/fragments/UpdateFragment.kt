@@ -1,21 +1,23 @@
 package com.raquel.blocodenotas.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.Priority
 import com.raquel.blocodenotas.data.Priority.*
 import com.raquel.blocodenotas.data.User
-
 import com.raquel.blocodenotas.databinding.FragmentUpdateBinding
 import com.raquel.blocodenotas.viewmodel.UserViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class UpdateFragment : Fragment() {
 
@@ -31,7 +33,6 @@ class UpdateFragment : Fragment() {
 
     //update
     private val mUserViewModel: UserViewModel by viewModels()
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -62,42 +63,83 @@ class UpdateFragment : Fragment() {
                     updateDataToDatabase()
                 }
             }
+
         }
         initView()
+
+        setHasOptionsMenu(true)
         return view
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean{
+        if(item.itemId == R.id.delete_sigle) confirmRemoval()
+        return super.onOptionsItemSelected(item)
+    }
+
+
+
+    private fun confirmRemoval() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Sim"){
+            _,_->
+            args.currentItem?.let { mUserViewModel.deleteUser(it) }
+            DynamicToast.make(this@UpdateFragment.requireActivity(), "Nota deletada")
+                    .show()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment3)
+        }
+        builder.setTitle("Tem certeza que deseja apagar '${args.currentItem?.notesTitleDB}'?")
+        builder.setMessage("Não será possível recuperar o arquivo")
+        builder.setNegativeButton("Não") { _, _ -> }
+        builder.create().show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+       inflater.inflate(R.menu.update_fragment_menu, menu)
     }
 
     private fun parsePriorityModelToView(enumPriority: Priority) {
        when (enumPriority) {
-            LOW -> {
-                binding.apply {
-                    NotesFragment.setGivenColorToPriorityImageView(updateGreenButton, updateYellowButton, updateRedButton)
-                }
-                priority = "1"
-            }
-            MEDIUM -> {
-                binding.apply {
-                    NotesFragment.setGivenColorToPriorityImageView(updateYellowButton, updateGreenButton, updateRedButton)
-                }
-                priority = "2"
-            }
-            HIGH -> {
-                binding.apply {
-                    NotesFragment.setGivenColorToPriorityImageView(updateRedButton, updateGreenButton, updateYellowButton)
-                }
-                priority = "3"
-            }
+           LOW -> {
+               binding.apply {
+                   NotesFragment.setGivenColorToPriorityImageView(
+                           updateGreenButton,
+                           updateYellowButton,
+                           updateRedButton
+                   )
+               }
+               priority = "1"
+           }
+           MEDIUM -> {
+               binding.apply {
+                   NotesFragment.setGivenColorToPriorityImageView(
+                           updateYellowButton,
+                           updateGreenButton,
+                           updateRedButton
+                   )
+               }
+               priority = "2"
+           }
+           HIGH -> {
+               binding.apply {
+                   NotesFragment.setGivenColorToPriorityImageView(
+                           updateRedButton,
+                           updateGreenButton,
+                           updateYellowButton
+                   )
+               }
+               priority = "3"
+           }
         }
 
     }
 
     private fun bringDataArgsToUpdateView() {
         binding.apply {
-            titleEditText.setText(args.currentItem.notesTitleDB)
-            updateSubtitleEditText.setText(args.currentItem.notesSubtitleDB)
-            updateNotesEditText.setText(args.currentItem.notesContent)
+            titleEditText.setText(args.currentItem?.notesTitleDB)
+            updateSubtitleEditText.setText(args.currentItem?.notesSubtitleDB)
+            updateNotesEditText.setText(args.currentItem?.notesContent)
         }
-        when (args.currentItem.notesPriorityDB) {
+        when (args.currentItem?.notesPriorityDB) {
             LOW -> parsePriorityModelToView(LOW)
             MEDIUM -> parsePriorityModelToView(MEDIUM)
             HIGH -> parsePriorityModelToView(HIGH)
@@ -112,16 +154,21 @@ class UpdateFragment : Fragment() {
 
             if (NotesFragment.inputCheck(title, notes)) {
                 //SE FOR TRUE, CRIAR OBJETO DA CLASSE USER NO BANCO DE DADOS
-                val updatedItem = User(args.currentItem.id,
-                        title,
-                        subtitle,
-                        notes,
-                        currentDate,
-                        NotesFragment.convertPriorityViewToModel(priority)
-                )
+                val updatedItem = args.currentItem?.let {
+                    User(
+                            it.id,
+                            title,
+                            subtitle,
+                            notes,
+                            currentDate,
+                            NotesFragment.convertPriorityViewToModel(priority)
+                    )
+                }
                 //ADICIONAR AO BANCO DE DADOS
                 //MVIEWMODEL
-                mUserViewModel.updateUser(updatedItem)
+                if (updatedItem != null) {
+                    mUserViewModel.updateUser(updatedItem)
+                }
                 DynamicToast.make(this@UpdateFragment.requireActivity(), "Nota salva com sucesso")
                     .show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment3)

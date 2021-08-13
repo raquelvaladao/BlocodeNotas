@@ -1,10 +1,8 @@
-package com.raquel.blocodenotas.fragments
+package com.raquel.blocodenotas.adapter
 
-import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.raquel.blocodenotas.R
 import com.raquel.blocodenotas.data.Priority
 import com.raquel.blocodenotas.data.User
+import com.raquel.blocodenotas.fragments.ListFragmentDirections
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     private var userList = emptyList<User>()
@@ -22,9 +21,11 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_notes, parent, false))
     }
 
+
     override fun getItemCount(): Int {
         return userList.size
     }
+
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = userList[position]
@@ -45,6 +46,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
                 Priority.LOW -> holder.itemView.findViewById<View>(R.id.notesPriorityItem)
                     .setBackgroundResource(R.drawable.green_shape)
             }
+
         }
     }
     fun setData(user: List<User>){

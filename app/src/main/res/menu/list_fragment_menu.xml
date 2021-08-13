@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_search"
-        android:title="Buscar"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:iconTint="@color/white"
-        app:showAsAction="ifRoom"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <group android:checkableBehavior="single">
+
+
         <item
-           android:id="@+id/menu_sortBy"
-           android:title="@string/ordenar_por"/>
-            <menu>
-                <item
-                    android:id="@+id/menu_priority_high"
-                    android:title="prioridade_alta"/>
-                <item
-                    android:id="@+id/menu_priority_medium"
-                    android:title="Prioridade_média"/>
-                <item
-                    android:id="@+id/menu_priority_low"
-                    android:title="Prioridade_baixa"/>
-            </menu>
-    </group>
-
+            android:id="@+id/delete_all"
+            android:title="Deletar tudo"
+            app:showAsAction="never"/>
     <item
-        android:id="@+id/delete_all"
-        android:title="Deletar tudo"
-        app:showAsAction="never"/>
+        android:id="@+id/priority_sort"
+        android:icon="@drawable/ic_baseline_filter"
+        android:title="Filtrar por"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/high_priority_sort"
+                android:title="Prioridade alta" />
+            <item
+                android:id="@+id/low_priority_sort"
+                android:title="Prioridade baixa" />
+            <item
+                android:id="@+id/no_priority_sort"
+                android:title="Sem filtro" />
+        </menu>
+    </item>
+
+
 </menu>
